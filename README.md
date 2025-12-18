@@ -2,6 +2,8 @@
 
 **From turbulence to throughput.** Yard management reimagined with genetic algorithms and sensor fusion.
 
+🚀 **Live and Production-Ready**
+
 ## Features
 
 ### 🧬 Project Genesis
