@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flow State by FreightRoll
 
-## Getting Started
+**From turbulence to throughput.** Yard management reimagined with genetic algorithms and sensor fusion.
 
-First, run the development server:
+## Features
 
+### 🧬 Project Genesis
+Genetic layout optimization that scores yard designs using Reynolds Number to minimize operational viscosity. Automatically generates optimal dock, staging, and office layouts under constraints.
+
+### 📡 Telemetry Pipeline
+Real-time asset tracking with vision + UWB sensor fusion. Resolves positions using confidence-weighted algorithms for accurate yard telemetry.
+
+### 🔒 Production-Ready Security
+- API key authentication
+- Rate limiting (configurable per endpoint)
+- Input validation with Zod
+- File upload restrictions
+- Computational limits on algorithms
+
+## Quick Start
+
+### Development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Copy environment template:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+3. Run development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000)
+
+### Production Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for comprehensive deployment instructions.
+
+## API Endpoints
+
+All API endpoints require authentication in production via `Authorization: Bearer YOUR_API_KEY` header.
+
+### Genesis Optimization
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+POST /api/genesis/optimize
+```
+Run genetic algorithm to optimize yard layout.
+
+### Telemetry Ingestion
+```bash
+POST /api/telemetry/ingest/vision  # Camera detections
+POST /api/telemetry/ingest/uwb     # UWB positioning
+POST /api/frame/ingest              # Frame capture
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Sensor Fusion
+```bash
+POST /api/telemetry/resolve        # Combine vision + UWB data
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Health Check
+```bash
+GET /api/health                     # Application health status
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rate Limits
 
-## Learn More
+Default limits per IP address:
+- Genesis: 10 req/min (CPU-intensive)
+- Frame upload: 20 req/min
+- Vision telemetry: 100 req/min
+- UWB telemetry: 200 req/min
+- Resolve: 100 req/min
 
-To learn more about Next.js, take a look at the following resources:
+## Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/
+│   ├── api/              # API routes with auth & rate limiting
+│   ├── genesis/          # Genesis UI page
+│   └── page.tsx          # Home page
+├── components/           # Reusable React components
+└── lib/
+    ├── genesis/          # Genetic algorithm logic
+    ├── telemetry/        # Sensor fusion & storage
+    ├── auth.ts           # Authentication middleware
+    ├── rate-limit.ts     # Rate limiting logic
+    └── env.ts            # Environment validation
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development Tools
 
-## Deploy on Vercel
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run telemetry:worker  # Start MQTT worker
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- ✅ Zero npm vulnerabilities
+- ✅ Input validation on all endpoints
+- ✅ Rate limiting to prevent DoS
+- ✅ File upload restrictions
+- ✅ Computational limits on algorithms
+- ✅ Environment variable validation
+
+See [SECURITY_REVIEW.md](SECURITY_REVIEW.md) for detailed security analysis.
+
+## Technology Stack
+
+- **Framework**: Next.js 16 with App Router
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4
+- **Validation**: Zod
+- **Telemetry**: MQTT + Custom sensor fusion
+- **Optimization**: Custom genetic algorithm
+
+## Documentation
+
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Production deployment guide
+- [SECURITY_REVIEW.md](SECURITY_REVIEW.md) - Security analysis and recommendations
+
+## License
+
+Private project - All rights reserved

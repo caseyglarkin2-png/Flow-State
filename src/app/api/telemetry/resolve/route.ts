@@ -1,7 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { TelemetryStore } from "@/lib/telemetry/store";
 import { TelemetryResolver } from "@/lib/telemetry/TelemetryResolver";
+import { validateAuth } from "@/lib/auth";
+import { rateLimitResponse } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -13,7 +15,18 @@ const Schema = z.object({
   uwbTagId: z.string().optional()
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
+  // Auth check
+  const authError = validateAuth(req);
+  if (authError) return authError;
+
+  // Rate limit: 100 requests per minute per IP
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  const rateLimitError = rateLimitResponse(`resolve:${ip}`, {
+    windowMs: 60 * 1000,
+    maxRequests: 100,
+  });
+  if (rateLimitError) return rateLimitError;
   const body = await req.json().catch(() => null);
   const parsed = Schema.safeParse(body);
   if (!parsed.success) {

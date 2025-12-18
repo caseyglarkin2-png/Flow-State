@@ -14,10 +14,12 @@
 
 import mqtt from "mqtt";
 import { z } from "zod";
+import { env } from "../src/lib/env";
 
-const MQTT_URL = process.env.MQTT_URL || "mqtt://localhost:1883";
-const MQTT_TOPIC = process.env.MQTT_TOPIC || "uwb/positions";
-const API_URL = process.env.API_URL || "http://localhost:3000/api/telemetry/ingest/uwb";
+const MQTT_URL = env.MQTT_URL;
+const MQTT_TOPIC = env.MQTT_TOPIC;
+const API_URL = env.INTERNAL_API_URL || "http://localhost:3000/api/telemetry/ingest/uwb";
+const MAX_MESSAGE_SIZE = 1024 * 1024; // 1MB
 
 const UwbMessageSchema = z.object({
   tagId: z.string(),
@@ -30,9 +32,16 @@ const UwbMessageSchema = z.object({
 
 async function forwardToApi(data: z.infer<typeof UwbMessageSchema>) {
   try {
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    
+    // Add auth header if API key is configured
+    if (env.API_KEY) {
+      headers["Authorization"] = `Bearer ${env.API_KEY}`;
+    }
+
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body: JSON.stringify({
         tagId: data.tagId,
         world: { x: data.x, y: data.y },
@@ -55,7 +64,20 @@ function main() {
   console.log(`Subscribing to topic: ${MQTT_TOPIC}`);
   console.log(`Forwarding to API: ${API_URL}`);
 
-  const client = mqtt.connect(MQTT_URL);
+  const mqttOptions: mqtt.IClientOptions = {
+    reconnectPeriod: 1000,
+    connectTimeout: 30 * 1000,
+  };
+
+  // Add credentials if configured
+  if (env.MQTT_USERNAME) {
+    mqttOptions.username = env.MQTT_USERNAME;
+  }
+  if (env.MQTT_PASSWORD) {
+    mqttOptions.password = env.MQTT_PASSWORD;
+  }
+
+  const client = mqtt.connect(MQTT_URL, mqttOptions);
 
   client.on("connect", () => {
     console.log("Connected to MQTT broker");
@@ -70,6 +92,12 @@ function main() {
 
   client.on("message", async (_topic, message) => {
     try {
+      // Check message size
+      if (message.length > MAX_MESSAGE_SIZE) {
+        console.warn(`Message too large (${message.length} bytes), skipping`);
+        return;
+      }
+
       const raw = JSON.parse(message.toString());
       const parsed = UwbMessageSchema.safeParse(raw);
 
