@@ -48,3 +48,7 @@ html.kiosk .kiosk-text {
     border-color: rgba(255,255,255,.28) !important;
   }
 }
+
+.glow {
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+}
