@@ -144,10 +144,10 @@ export default function SingularityPage() {
           The <span className="text-cyan-400 glow">Logistics Singularity</span>
         </h1>
         <p className="text-xl text-slate-300 mb-2">
-          Watch what happens when every facility in your network achieves Flow State.
+          Witness the transformation as every facility in your network enters Flow State.
         </p>
         <p className="text-lg text-cyan-400 font-medium mb-8">
-          This is the point of no return.
+          This is the point of no return
         </p>
       </div>
 
@@ -164,14 +164,10 @@ export default function SingularityPage() {
       <div className="max-w-4xl px-4 pb-20 text-slate-300 space-y-6 text-center">
         <h2 className="text-2xl font-semibold text-white">Beyond Optimization</h2>
         <p>
-          When individual nodes in your supply chain reach peak efficiency, a new phenomenon emerges. 
-          The network itself begins to behave as a single, cohesive organism. Latency drops to zero. 
-          Throughput becomes fluid. This is the Logistics Singularity.
+          When every node in your supply chain operates at peak efficiency, something extraordinary happens. The network itself becomes a living system. Latency disappears. Throughput flows without friction. This is the Logistics Singularity.
         </p>
         <p>
-          Traditional systems manage chaos. Flow State eliminates it. By synchronizing 
-          vision, telemetry, and physics-based optimization, we don't just improve your yard—we 
-          transform your entire logistics network into a predictable, high-velocity stream.
+          Most systems try to manage chaos. Flow State erases it. By uniting vision, telemetry, and physics-driven optimization, we do more than improve your yard. We transform your entire logistics network into a seamless, high-velocity flow.
         </p>
       </div>
     </div>
