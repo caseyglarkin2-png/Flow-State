@@ -6,9 +6,9 @@ export function SiteHeader() {
     <>
       {/* Top Bar */}
       <div className="bg-cyan-950/30 border-b border-cyan-500/20 text-center py-2 text-xs font-medium text-cyan-200">
-        <span className="mr-2">Founding Member Program Open — Only 23 spots left</span>
-        <Link href="/demo" className="hover:text-white transition">
-          →
+        <span className="mr-2">✦ Founding Member Program Open</span>
+        <Link href="/apply" className="text-white font-semibold hover:text-cyan-300 transition">
+          Only 23 spots left →
         </Link>
       </div>
       
@@ -35,9 +35,9 @@ export function SiteHeader() {
             <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition">
               Login
             </Link>
-            <Link href="/demo">
+            <Link href="/apply">
                 <Button className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold border-none">
-                    ⚡ Book Demo
+                    Apply for Membership
                 </Button>
             </Link>
           </div>
