@@ -137,14 +137,14 @@ export default function SingularityPage() {
           This is the point of no return</p>
       </div>
 
-      <div className="relative w-full max-w-6xl aspect-video bg-slate-900/50 rounded-xl border border-white/10 overflow-hidden mb-10">
+      <div className="relative w-full max-w-6xl aspect-video rounded-xl overflow-hidden mb-10">
         <div className="absolute top-4 left-4 z-20">
-          <div className="bg-orange-900/80 text-orange-200 px-3 py-1 rounded-full text-xs font-bold border border-orange-500/50 flex items-center gap-2">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+          <div className="bg-red-900/80 text-red-200 px-3 py-1 rounded-full text-xs font-bold border border-red-500/50 flex items-center gap-2">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
             CHAOS STATE
           </div>
         </div>
-        <canvas ref={canvasRef} className="w-full h-full block" />
+        <canvas ref={canvasRef} className="w-full h-full block bg-black" />
       </div>
 
       <div className="max-w-4xl px-4 pb-20 text-slate-300 space-y-6 text-center">
