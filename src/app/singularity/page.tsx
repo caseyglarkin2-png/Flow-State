@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/Button";
 
-// Approximate relative coordinates for major US cities (0-100 scale)
+// Approximate relative coordinates for major US cities (0 to 100 scale)
 const CITIES = [
   { name: "Seattle", x: 15, y: 15 },
   { name: "Portland", x: 14, y: 22 },
@@ -126,7 +126,7 @@ export default function SingularityPage() {
       }
       ctx.stroke();
 
-      // NO RINGS - explicitly not adding them.
+      // NO RINGS. Explicitly not adding them.
     };
 
     render();
@@ -144,11 +144,9 @@ export default function SingularityPage() {
           The <span className="text-cyan-400 glow">Logistics Singularity</span>
         </h1>
         <p className="text-xl text-slate-300 mb-2">
-          Witness the transformation as every facility in your network enters Flow State.
-        </p>
+          Witness the transformation as every facility in your network enters Flow State.</p>
         <p className="text-lg text-cyan-400 font-medium mb-8">
-          This is the point of no return
-        </p>
+          This is the point of no return</p>
       </div>
 
       <div className="relative w-full max-w-6xl aspect-video bg-slate-900/50 rounded-xl border border-white/10 overflow-hidden mb-10">
