@@ -6,9 +6,9 @@ export function SiteHeader() {
     <>
       {/* Top Bar */}
       <div className="bg-cyan-950/30 border-b border-cyan-500/20 text-center py-2 text-xs font-medium text-cyan-200">
-        <span className="mr-2">✦ Founding Member Program Open</span>
+        <span className="mr-2">✦ Founding Member Program</span>
         <Link href="/apply" className="text-white font-semibold hover:text-cyan-300 transition">
-          Only 23 spots left →
+          Only 5 spots left →
         </Link>
       </div>
       
