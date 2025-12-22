@@ -64,50 +64,15 @@ export default function SingularityPage() {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Grid
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
-      ctx.lineWidth = 1;
-      const gridSize = 50;
-      for (let x = 0; x < canvas.width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
-        ctx.stroke();
-      }
-      for (let y = 0; y < canvas.height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
-        ctx.stroke();
-      }
+      // NO GRID, NO RINGS - clean background only
 
       // Draw Cities
       const scaleX = canvas.width / 100;
       const scaleY = canvas.height / 100;
-      const offsetX = 0; // Center if needed
-      const offsetY = 0;
 
-      CITIES.forEach((city) => {
-        const x = city.x * scaleX * 0.8 + canvas.width * 0.1; // Scale and center roughly
-        const y = city.y * scaleY * 0.8 + canvas.height * 0.1;
-
-        // Draw Dot (Red as requested)
-        ctx.fillStyle = "#ef4444"; // Red-500
-        ctx.beginPath();
-        ctx.arc(x, y, 6, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Draw Label
-        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-        ctx.font = "10px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(city.name, x, y + 15);
-      });
-
-      // Draw Connections (Vectors)
-      ctx.strokeStyle = "rgba(239, 68, 68, 0.2)"; // Red with low opacity
+      // Draw Connections (Vectors) FIRST so dots render on top
+      ctx.strokeStyle = "rgba(239, 68, 68, 0.15)";
       ctx.lineWidth = 1;
-      ctx.beginPath();
       for (let i = 0; i < CITIES.length; i++) {
         for (let j = i + 1; j < CITIES.length; j++) {
           const c1 = CITIES[i];
@@ -118,15 +83,38 @@ export default function SingularityPage() {
           const y2 = c2.y * scaleY * 0.8 + canvas.height * 0.1;
 
           const dist = Math.hypot(x2 - x1, y2 - y1);
-          if (dist < 200) { // Only connect close cities
+          if (dist < 180) {
+            ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
+            ctx.stroke();
           }
         }
       }
-      ctx.stroke();
 
-      // NO RINGS. Explicitly not adding them.
+      // Draw Facilities (RED dots for Chaos State)
+      CITIES.forEach((city) => {
+        const x = city.x * scaleX * 0.8 + canvas.width * 0.1;
+        const y = city.y * scaleY * 0.8 + canvas.height * 0.1;
+
+        // Red facility dot
+        ctx.fillStyle = "#dc2626";
+        ctx.beginPath();
+        ctx.arc(x, y, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Subtle glow effect
+        ctx.fillStyle = "rgba(220, 38, 38, 0.3)";
+        ctx.beginPath();
+        ctx.arc(x, y, 12, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw Label
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.font = "11px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(city.name, x, y + 22);
+      });
     };
 
     render();
