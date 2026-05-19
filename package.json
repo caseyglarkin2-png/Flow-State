@@ -10,6 +10,7 @@
     "telemetry:worker": "node --loader ts-node/esm scripts/uwb-mqtt-worker.ts"
   },
   "dependencies": {
+    "geist": "^1.3.1",
     "mqtt": "^5.14.1",
     "next": "16.0.10",
     "react": "19.2.1",
